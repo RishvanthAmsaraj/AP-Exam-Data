@@ -1,0 +1,177 @@
+---
+title: "Analysis"
+description: |
+  Fitted data model and additioanl observataions
+execute: 
+  echo: false
+---
+
+```{r}
+#| message: FALSE 
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(primer.data)
+library(skimr)
+library(ggthemes)
+library(stringr)
+library(readr)
+library(rstanarm)
+library(ordinal)
+library(gganimate)
+# Learn more about creating websites with Distill at:
+# https://rstudio.github.io/distill/website.html
+
+# Learn more about publishing to GitHub Pages at:
+# https://rstudio.github.io/distill/publish_website.html#github-pages
+```
+
+## Central Question
+
+What is the probability that a student is female and black and passes the AP Exam?
+
+## Fitted Model
+
+```{r}
+#| message: FALSE 
+knitr::opts_chunk$set(echo = FALSE)
+num_females <- c(64, 66, 100, 123, 183, 203)  
+num_black <- c(32, 29, 13, 36, 47, 25) 
+num_females_passed <- c(35, 47, 77, 80, 108, 130)  
+num_black_passed <- c(6, 5, 8, 14, 11, 10)  
+
+prop_female <- num_females_passed / num_females
+prop_black <- num_black_passed / num_black
+prop_female_and_black <- (num_females_passed + num_black_passed) / (num_females + num_black)
+
+data_frame <- data.frame(
+  Year = 2008:2013,
+  Female_Prob = prop_female,
+  Black_Prob = prop_black,
+  Female_And_Black_Prob = prop_female_and_black
+)
+
+fit_model <- stan_glm(cbind(num_females_passed, num_females - num_females_passed) ~ 1, family = binomial(), data = data.frame(num_females), refresh = 0)
+
+posterior_predictions <- posterior_linpred(fit_model)
+posterior_probs <- plogis(posterior_predictions)
+posterior_data <- data.frame(Year = 2008:2013, Posterior_Prob = colMeans(posterior_probs))
+
+merged_data <- merge(data_frame, posterior_data, by = "Year")
+merged_data_long <- tidyr::gather(merged_data, Category, Probability, -Year)
+
+p <- ggplot(merged_data_long, aes(x = Year, y = Probability, color = Category)) +
+  geom_line(aes(group = Category), linewidth = 1) +
+  labs(
+    x = "Year",
+    y = "Probability",
+    color = "Category",
+    title = "Probability Of Passing The Test: Female and Black",
+    subtitle = "Students who are both female and black have around a 50% chance of Passing in Illinois",
+    caption = "Source: Data.World (Education; 2013)"
+  ) +
+  scale_color_manual(
+    values = c("Female_Prob" = "blue", "Black_Prob" = "red",
+               "Female_And_Black_Prob" = "purple", "Posterior_Prob" = "green"),
+    labels = c("Black (Observed)", "Female and Black (Observed)", "Female (Observed)", "Posterior")
+  ) +
+  theme_minimal() +
+  transition_reveal(Year)
+
+animate(p, nframes = 100, duration = 5, end_pause = 10, renderer = gifski_renderer(), width = 1000, height = 500, res = 96)
+```
+
+Graph Logistics -
+
+ - The graph visually presents the observed proportions and posterior probabilities over time, allowing for easier comparison and identification of trends.
+ 
+ - The lines representing "Female", "Black", and "Female and Black" display the observed probabilities of passing the test for females, black individuals, and the combined category, respectively.
+
+ - The dashed line representing "Posterior" shows the predicted probabilities of passing the test for the combined category based on the Bayesian analysis.
+
+## Mathematical formula
+
+The mathematical formula of the model used in the code is a simple logistic regression model. In logistic regression, the log-odds of an event occurring (in this case, passing the test) is modeled as a linear combination of predictor variables. The formula for the logistic regression model can be represented as:
+
+log(p / (1 - p)) = β₀ + β₁ * x
+
+Where:
+
+p is the probability of passing the test
+x is the predictor variable (in this case, it is a constant term of 1)
+β₀ is the intercept or bias term
+β₁ is the coefficient associated with the predictor variable
+
+To obtain the probability of passing the test, we apply the inverse logit (also called the logistic function) to both sides of the equation:
+
+p = 1 / (1 + exp(-(β₀ + β₁ * x))
+
+In the code, the model is fitted using the stan_glm function with the formula cbind(num_females_passed, num_females - num_females_passed) ~ 1, which means we are modeling the number of females passed against the total number of females. The intercept term (β₀) represents the log-odds of passing for the reference group (non-females), and the coefficient (β₁) represents the difference in log-odds between the reference group and females.
+
+By transforming the log-odds to probabilities using the plogis function, we obtain the estimated probabilities of passing the test for females, black individuals, and the combined category of female and black individuals over time.
+
+## Table
+
+```{r}
+#| message: FALSE 
+
+num_females <- c(64, 66, 100, 123, 183, 203)  
+num_black <- c(32, 29, 13, 36, 47, 25) 
+num_females_passed <- c(35, 47, 77, 80, 108, 130)  
+num_black_passed <- c(6, 5, 8, 14, 11, 10)  
+
+prop_female <- num_females_passed / num_females
+prop_black <- num_black_passed / num_black
+prop_female_and_black <- (num_females_passed + num_black_passed) / (num_females + num_black)
+
+data_frame <- data.frame(Year = 2008:2013, Female_Prob = prop_female, Black_Prob = prop_black, Female_And_Black_Prob = prop_female_and_black)
+fit_model <- stan_glm(cbind(num_females_passed, num_females - num_females_passed) ~ 1, family = binomial(), data = data.frame(num_females), refresh = 0)
+
+posterior_predictions <- posterior_linpred(fit_model)
+posterior_probs <- plogis(posterior_predictions)
+posterior_data <- data.frame(Year = 2008:2013, Posterior_Prob = colMeans(posterior_probs))
+
+merged_data <- merge(data_frame, posterior_data, by = "Year")
+table_data <- merged_data %>%
+  mutate_at(vars(Female_Prob, Black_Prob, Female_And_Black_Prob, Posterior_Prob), ~round(., 3)) %>%
+  rename("Year" = "Year",
+         "Female" = "Female_Prob",
+         "Black" = "Black_Prob",
+         "Female and Black" = "Female_And_Black_Prob",
+         "Posterior" = "Posterior_Prob")
+
+print(table_data)
+
+```
+
+Table Logistics -
+
+ - The "Female" column shows the observed proportions of females who passed the test. It indicates the likelihood of test success for females in each year.
+ 
+ - The "Black" column displays the observed proportions of black individuals who passed the test. It represents the likelihood of test success for black individuals in each year.
+ 
+ - The "Female and Black" column demonstrates the observed proportions of individuals who are both female and black and passed the test. It represents the likelihood of test success for this combined  category in each year.
+ 
+ - The "Posterior" column exhibits the posterior probabilities, obtained through Bayesian analysis, for the combined category of females and black individuals. It represents the predicted probabilities of test success for this category in each year.
+
+## Final Thoughts
+
+Selection of Illinois - 
+
+The decision to focus on Illinois was driven by two factors. Firstly, the data obtained from Kaggle required proper formatting, leading to a shift towards exploring outcomes within the state. Secondly, the project aimed to examine the odds of success for minority students specifically within Illinois, acknowledging that this percentage reflects the state's context. It is important to note that when comparing the findings to national data, a notable difference becomes apparent. By centering the analysis on Illinois, this study seeks to provide valuable insights into the educational experiences of minority students and contribute to the understanding of regional dynamics and disparities.
+
+Tying it to issues with minorities in the education system -
+
+The findings underscore the discrepancies in test success rates between different groups, notably women and people of color. Females and black people had lower observed probability, indicating probable disparities and problems in the school system. The Bayesian analysis and posterior probability give insight on potential improvements and solutions to these discrepancies.
+
+Combating the issues -
+
+The findings emphasize the need for targeted efforts and interventions to support and empower minority groups, including females and black individuals, within the education system. Strategies can include promoting diversity and inclusion, providing equal access to resources and opportunities, and addressing biases and stereotypes. It is essential to develop supportive learning environments, foster mentorship programs, and offer educational initiatives that encourage participation and success for all students, regardless of gender or race.
+
+
+
+
+
+
+
+
+

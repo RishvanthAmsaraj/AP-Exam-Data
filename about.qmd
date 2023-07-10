@@ -1,0 +1,21 @@
+---
+title: "Rishvanth Amsaraj"
+image: rishi.jpg
+about:
+  template: jolla
+  image-shape: round
+  image-width: 15em
+  links: 
+    - text: Github
+      icon: github
+      href: https://github.com/RishvanthAmsaraj
+    - text: Bootcamp
+      icon: envelope
+      href: https://bootcamp.davidkane.info/
+---
+
+## About Me
+
+Hi, my name is Rishvanth Amsaraj and I am a senior at Metea Valley High School. I aspire to be a business owner with interests in the fields of Data Science, Supply Chain Management, and Finance. As a student, I found great interest in the topic of AP scores in relation to gender and race. This project was a great experience for both learning Data Science as well as exploring a topic I am passionate about. 
+
+If you have any questions about the project, please mail me at - Rishvanthamsaraj@Gmail.com

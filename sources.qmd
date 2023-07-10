@@ -1,0 +1,31 @@
+---
+title: "Sources"
+description: |
+  Advanced Placement Exam Scores And Pass Rate Data
+---
+
+## Raw Data
+
+That data used in this project was sourced from -
+
+ - Kaggle (https://www.kaggle.com/datasets/collegeboard/ap-scores?select=exams.csv)
+ 
+ - data.world (https://data.world/education/ap-cs-pass-rate-by-racegender/workspace/file?filename=pass_rate.csv)
+
+## Process & Goal
+
+To begin processing the data for this project, I imported the raw data set into RStudio. I next cleaned the data, deleting any missing values and discrepancies in the variables relating to gender, race, and AP test results. This enabled me to make the first two graphs and discover trends in the data set. The graphs clearly showed that there was a gap between race and gender in the AP examinations, prompting me to create a model in which I may find an exact percent that I could extrapolate to findings of my prior models.
+
+## Cutting & Cleaning
+
+#### Average Score In Respect To Gender
+
+To create a graph addressing the average score in respect to gender, data manipulation was necessary. The initial step involved removing columns that discussed variables such as race, focusing solely on the gender-related data. Next, specific attention was given to selecting and aggregating the average scores rather than the count of students per score level. This process ensured that the graph accurately represented the average scores. By cleaning and cutting the data to include only the relevant variables and specifying the desired aggregation, a clean and focused dataset was obtained, enabling the development of a meaningful data model for the graph.
+
+#### Average Score In Respect To Race
+
+To create a graph addressing the average score in respect to race, data manipulation was necessary. The initial step involved removing columns that discussed variables such as gender, focusing solely on the race-related data. Next, specific attention was given to selecting and aggregating the average scores rather than the count of students per score level. Furthermore, certain race categories such as American Indian/Alaska Native, Native Hawaiian/Pacific Islander, and mixed races were excluded due to aggregation challenges arising from the quantity of data. This cleaning and cutting of the data allowed for the development of a meaningful data model, enabling the creation of a graph that effectively addressed the average score in relation to race.
+
+#### Final Model
+
+In the analysis of the probability of being a woman and black and passing the exam, we focused on the relevant variables by selecting only the women and black columns from the dataset. Using this subset of data, we calculated the percentage probability by dividing the number of women and black individuals who passed the exam by the number who took the exam. This allowed us to quantify the likelihood of success for this specific group. By employing this data modification and mathematical model, we gained valuable insights into the probability of passing the exam for women and black individuals.

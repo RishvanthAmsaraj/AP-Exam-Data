@@ -1,0 +1,114 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Rishvanth Amsaraj",
+    "section": "",
+    "text": "Hi, my name is Rishvanth Amsaraj and I am a senior at Metea Valley High School. I aspire to be a business owner with interests in the fields of Data Science, Supply Chain Management, and Finance. As a student, I found great interest in the topic of AP scores in relation to gender and race. This project was a great experience for both learning Data Science as well as exploring a topic I am passionate about.\nIf you have any questions about the project, please mail me at - Rishvanthamsaraj@Gmail.com"
+  },
+  {
+    "objectID": "about.html#about-me",
+    "href": "about.html#about-me",
+    "title": "Rishvanth Amsaraj",
+    "section": "",
+    "text": "Hi, my name is Rishvanth Amsaraj and I am a senior at Metea Valley High School. I aspire to be a business owner with interests in the fields of Data Science, Supply Chain Management, and Finance. As a student, I found great interest in the topic of AP scores in relation to gender and race. This project was a great experience for both learning Data Science as well as exploring a topic I am passionate about.\nIf you have any questions about the project, please mail me at - Rishvanthamsaraj@Gmail.com"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Analysis of AP Exam Data",
+    "section": "",
+    "text": "This data science project examines the link between race, gender, and AP test results, especially studying performance overlaps and disparities among different ethnic groupings. We want to find patterns and disclose potential disparities in AP exam outcomes depending on race and or gender by analyzing various data from the 2013 - 2016 academic year. It is critical to understand the dynamic character of education landscapes and interpret findings in the context of its time. The project’s goal is to contribute to the conversation about educational equity by using data to highlight the challenges that minority groups face in achieving success on AP exams, emphasizing the importance of addressing these disparities in order to foster inclusive and equitable educational opportunities."
+  },
+  {
+    "objectID": "index.html#introduction",
+    "href": "index.html#introduction",
+    "title": "Analysis of AP Exam Data",
+    "section": "",
+    "text": "This data science project examines the link between race, gender, and AP test results, especially studying performance overlaps and disparities among different ethnic groupings. We want to find patterns and disclose potential disparities in AP exam outcomes depending on race and or gender by analyzing various data from the 2013 - 2016 academic year. It is critical to understand the dynamic character of education landscapes and interpret findings in the context of its time. The project’s goal is to contribute to the conversation about educational equity by using data to highlight the challenges that minority groups face in achieving success on AP exams, emphasizing the importance of addressing these disparities in order to foster inclusive and equitable educational opportunities."
+  },
+  {
+    "objectID": "index.html#general-concepts",
+    "href": "index.html#general-concepts",
+    "title": "Analysis of AP Exam Data",
+    "section": "General Concepts",
+    "text": "General Concepts\nAP Exam - The Advanced Placement program offers college-level courses to high school students, and AP exams are standardized tests designed to assess students’ mastery of the subject matter.\nScoring System - The AP Exam is scaled from 1 - 5 (1 being a Lack of mastery, 5 being perfect mastery, and anything above a 3 considered for credit)."
+  },
+  {
+    "objectID": "index.html#data-models",
+    "href": "index.html#data-models",
+    "title": "Analysis of AP Exam Data",
+    "section": "Data Models",
+    "text": "Data Models\n\n\n\n\n\nThe analysis of the data set examining the correlation between gender, race, and AP scores revealed that males outscored females on 25 out of the 37 AP tests. This finding is significant as it suggests a gender disparity in AP exam performance, indicating that males, on average, achieve higher scores compared to their female counterparts. These results emphasize the importance of exploring and addressing the potential factors contributing to this disparity, such as societal expectations, educational opportunities, and biases.\n\n\n\n\n\nThe analysis of the data set revealed that Asians outperformed other racial groups on 35 out of the 37 AP tests examined. This finding highlights a significant academic advantage for Asian students across a wide range of subjects. However, in the specific AP tests of Language and Culture and Spanish, Latinos demonstrated higher scores compared to other groups, suggesting their strength in language-based assessments. Whites generally ranked second in performance, followed by Latinos in third place, and blacks in fourth place."
+  },
+  {
+    "objectID": "model.html",
+    "href": "model.html",
+    "title": "Analysis",
+    "section": "",
+    "text": "What is the probability that a student is female and black and passes the AP Exam?"
+  },
+  {
+    "objectID": "model.html#central-question",
+    "href": "model.html#central-question",
+    "title": "Analysis",
+    "section": "",
+    "text": "What is the probability that a student is female and black and passes the AP Exam?"
+  },
+  {
+    "objectID": "model.html#fitted-model",
+    "href": "model.html#fitted-model",
+    "title": "Analysis",
+    "section": "Fitted Model",
+    "text": "Fitted Model\n\n\n\n\n\nGraph Logistics -\n\nThe graph visually presents the observed proportions and posterior probabilities over time, allowing for easier comparison and identification of trends.\nThe lines representing “Female”, “Black”, and “Female and Black” display the observed probabilities of passing the test for females, black individuals, and the combined category, respectively.\nThe dashed line representing “Posterior” shows the predicted probabilities of passing the test for the combined category based on the Bayesian analysis."
+  },
+  {
+    "objectID": "model.html#mathematical-formula",
+    "href": "model.html#mathematical-formula",
+    "title": "Analysis",
+    "section": "Mathematical formula",
+    "text": "Mathematical formula\nThe mathematical formula of the model used in the code is a simple logistic regression model. In logistic regression, the log-odds of an event occurring (in this case, passing the test) is modeled as a linear combination of predictor variables. The formula for the logistic regression model can be represented as:\nlog(p / (1 - p)) = β₀ + β₁ * x\nWhere:\np is the probability of passing the test x is the predictor variable (in this case, it is a constant term of 1) β₀ is the intercept or bias term β₁ is the coefficient associated with the predictor variable\nTo obtain the probability of passing the test, we apply the inverse logit (also called the logistic function) to both sides of the equation:\np = 1 / (1 + exp(-(β₀ + β₁ * x))\nIn the code, the model is fitted using the stan_glm function with the formula cbind(num_females_passed, num_females - num_females_passed) ~ 1, which means we are modeling the number of females passed against the total number of females. The intercept term (β₀) represents the log-odds of passing for the reference group (non-females), and the coefficient (β₁) represents the difference in log-odds between the reference group and females.\nBy transforming the log-odds to probabilities using the plogis function, we obtain the estimated probabilities of passing the test for females, black individuals, and the combined category of female and black individuals over time."
+  },
+  {
+    "objectID": "model.html#table",
+    "href": "model.html#table",
+    "title": "Analysis",
+    "section": "Table",
+    "text": "Table\n\n\n  Year Female Black Female and Black Posterior\n1 2008  0.547 0.188            0.427     0.645\n2 2009  0.712 0.172            0.547     0.645\n3 2010  0.770 0.615            0.752     0.645\n4 2011  0.650 0.389            0.591     0.645\n5 2012  0.590 0.234            0.517     0.645\n6 2013  0.640 0.400            0.614     0.645\n\n\nTable Logistics -\n\nThe “Female” column shows the observed proportions of females who passed the test. It indicates the likelihood of test success for females in each year.\nThe “Black” column displays the observed proportions of black individuals who passed the test. It represents the likelihood of test success for black individuals in each year.\nThe “Female and Black” column demonstrates the observed proportions of individuals who are both female and black and passed the test. It represents the likelihood of test success for this combined category in each year.\nThe “Posterior” column exhibits the posterior probabilities, obtained through Bayesian analysis, for the combined category of females and black individuals. It represents the predicted probabilities of test success for this category in each year."
+  },
+  {
+    "objectID": "model.html#final-thoughts",
+    "href": "model.html#final-thoughts",
+    "title": "Analysis",
+    "section": "Final Thoughts",
+    "text": "Final Thoughts\nSelection of Illinois -\nThe decision to focus on Illinois was driven by two factors. Firstly, the data obtained from Kaggle required proper formatting, leading to a shift towards exploring outcomes within the state. Secondly, the project aimed to examine the odds of success for minority students specifically within Illinois, acknowledging that this percentage reflects the state’s context. It is important to note that when comparing the findings to national data, a notable difference becomes apparent. By centering the analysis on Illinois, this study seeks to provide valuable insights into the educational experiences of minority students and contribute to the understanding of regional dynamics and disparities.\nTying it to issues with minorities in the education system -\nThe findings underscore the discrepancies in test success rates between different groups, notably women and people of color. Females and black people had lower observed probability, indicating probable disparities and problems in the school system. The Bayesian analysis and posterior probability give insight on potential improvements and solutions to these discrepancies.\nCombating the issues -\nThe findings emphasize the need for targeted efforts and interventions to support and empower minority groups, including females and black individuals, within the education system. Strategies can include promoting diversity and inclusion, providing equal access to resources and opportunities, and addressing biases and stereotypes. It is essential to develop supportive learning environments, foster mentorship programs, and offer educational initiatives that encourage participation and success for all students, regardless of gender or race."
+  },
+  {
+    "objectID": "sources.html",
+    "href": "sources.html",
+    "title": "Sources",
+    "section": "",
+    "text": "That data used in this project was sourced from -\n\nKaggle (https://www.kaggle.com/datasets/collegeboard/ap-scores?select=exams.csv)\ndata.world (https://data.world/education/ap-cs-pass-rate-by-racegender/workspace/file?filename=pass_rate.csv)"
+  },
+  {
+    "objectID": "sources.html#raw-data",
+    "href": "sources.html#raw-data",
+    "title": "Sources",
+    "section": "",
+    "text": "That data used in this project was sourced from -\n\nKaggle (https://www.kaggle.com/datasets/collegeboard/ap-scores?select=exams.csv)\ndata.world (https://data.world/education/ap-cs-pass-rate-by-racegender/workspace/file?filename=pass_rate.csv)"
+  },
+  {
+    "objectID": "sources.html#process-goal",
+    "href": "sources.html#process-goal",
+    "title": "Sources",
+    "section": "Process & Goal",
+    "text": "Process & Goal\nTo begin processing the data for this project, I imported the raw data set into RStudio. I next cleaned the data, deleting any missing values and discrepancies in the variables relating to gender, race, and AP test results. This enabled me to make the first two graphs and discover trends in the data set. The graphs clearly showed that there was a gap between race and gender in the AP examinations, prompting me to create a model in which I may find an exact percent that I could extrapolate to findings of my prior models."
+  },
+  {
+    "objectID": "sources.html#cutting-cleaning",
+    "href": "sources.html#cutting-cleaning",
+    "title": "Sources",
+    "section": "Cutting & Cleaning",
+    "text": "Cutting & Cleaning\n\nAverage Score In Respect To Gender\nTo create a graph addressing the average score in respect to gender, data manipulation was necessary. The initial step involved removing columns that discussed variables such as race, focusing solely on the gender-related data. Next, specific attention was given to selecting and aggregating the average scores rather than the count of students per score level. This process ensured that the graph accurately represented the average scores. By cleaning and cutting the data to include only the relevant variables and specifying the desired aggregation, a clean and focused dataset was obtained, enabling the development of a meaningful data model for the graph.\n\n\nAverage Score In Respect To Race\nTo create a graph addressing the average score in respect to race, data manipulation was necessary. The initial step involved removing columns that discussed variables such as gender, focusing solely on the race-related data. Next, specific attention was given to selecting and aggregating the average scores rather than the count of students per score level. Furthermore, certain race categories such as American Indian/Alaska Native, Native Hawaiian/Pacific Islander, and mixed races were excluded due to aggregation challenges arising from the quantity of data. This cleaning and cutting of the data allowed for the development of a meaningful data model, enabling the creation of a graph that effectively addressed the average score in relation to race.\n\n\nFinal Model\nIn the analysis of the probability of being a woman and black and passing the exam, we focused on the relevant variables by selecting only the women and black columns from the dataset. Using this subset of data, we calculated the percentage probability by dividing the number of women and black individuals who passed the exam by the number who took the exam. This allowed us to quantify the likelihood of success for this specific group. By employing this data modification and mathematical model, we gained valuable insights into the probability of passing the exam for women and black individuals."
+  }
+]

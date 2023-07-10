@@ -1,0 +1,98 @@
+---
+title: "Analysis of AP Exam Data"
+description: |
+  Investigating the Relationship Between Gender & Race in respect to AP Exam Scores
+execute: 
+  echo: false
+---
+## Introduction
+
+This data science project examines the link between race, gender, and AP test results, especially studying performance overlaps and disparities among different ethnic groupings. We want to find patterns and disclose potential disparities in AP exam outcomes depending on race and or gender by analyzing various data from the 2013 - 2016 academic year. It is critical to understand the dynamic character of education landscapes and interpret findings in the context of its time. The project's goal is to contribute to the conversation about educational equity by using data to highlight the challenges that minority groups face in achieving success on AP exams, emphasizing the importance of addressing these disparities in order to foster inclusive and equitable educational opportunities.
+
+```{r}
+#| message: FALSE 
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(ggthemes)
+library(stringr)
+# Learn more about creating websites with Distill at:
+# https://rstudio.github.io/distill/website.html
+
+# Learn more about publishing to GitHub Pages at:
+# https://rstudio.github.io/distill/publish_website.html#github-pages
+```
+
+## General Concepts
+
+AP Exam - The Advanced Placement program offers college-level courses to high school students, and AP exams are standardized tests designed to assess students' mastery of the subject matter.
+
+Scoring System - The AP Exam is scaled from 1 - 5 (1 being a Lack of mastery, 5 being perfect mastery, and anything above a 3 considered for credit).
+
+## Data Models
+
+```{r}
+#| message: FALSE 
+data <- read_csv("exams.csv", show_col_types = FALSE)
+data1 <- data|>
+  select("Exam Subject", "Score", "Students (Male)", "Students (Female)")
+colnames(data1) <- c("Subject", "Score", "Male", "Female")
+
+data1 |>
+  drop_na() |>
+  group_by(Subject) |>
+  filter(Score == "Average") |>
+  
+  ggplot(aes(x = Subject)) +
+  geom_point(aes(y = Male, color = "Blue"), show.legend = TRUE) +
+  geom_point(aes(y = Female, color = "Red"), show.legend = TRUE) +
+  
+  scale_color_manual(values = c("Blue" = "blue", "Red" = "red"),
+                     labels = c("Male", "Female")) +
+  
+  theme(legend.position = "right", axis.text.x = element_text(angle=45, hjust=1, size = 7)) +
+  
+  labs(title = "Average Score In Respect To Gender",
+       subtitle = "We can see that males tend to have a higher average than females",
+       x = "Exam",
+       y = "Average Score",
+       caption = "Source: Kaggle (College Board; 2017)",
+       color = "Sex")
+```
+
+The analysis of the data set examining the correlation between gender, race, and AP scores revealed that males outscored females on 25 out of the 37 AP tests. This finding is significant as it suggests a gender disparity in AP exam performance, indicating that males, on average, achieve higher scores compared to their female counterparts. These results emphasize the importance of exploring and addressing the potential factors contributing to this disparity, such as societal expectations, educational opportunities, and biases.
+
+```{r}
+#| message: FALSE 
+data <- read_csv("exams.csv", show_col_types = FALSE)
+data2 <- data|>
+  select("Exam Subject", "Score", "Students (White)", "Students (Black)", "Students (Hispanic/Latino)", "Students (Asian)")
+colnames(data2) <- c("Subject", "Score", "White", "Black", "Latino", "Asian")
+
+data2 |>
+  drop_na() |>
+  group_by(Subject) |>
+  filter(Score == "Average") |>
+  
+  ggplot(aes(x = Subject)) +
+  geom_point(aes(y = White, color = "White"), show.legend = TRUE) +
+  geom_point(aes(y = Black, color = "Black"), show.legend = TRUE) +
+  geom_point(aes(y = Latino, color = "Brown"), show.legend = TRUE) +
+  geom_point(aes(y = Asian, color = "Yellow"), show.legend = TRUE) +
+  
+  scale_color_manual(values = c("White" = "White", "Black" = "Black", "Brown" = "Brown", "Yellow" = "Yellow"),
+                     
+                     labels = c("Black", "Latino", "White", "Asian")) +
+  
+                     scale_y_discrete(limits = c("1","2","3","4","5"))+
+  
+  theme(legend.position = "right", axis.text.x = element_text(angle=45, hjust=1, size = 7)) +
+  
+  labs(title = "Average Score In Respect To Race",
+       subtitle = "We can see that Asians outscored their peers on 35 out of the 37 AP tests",
+       x = "Exam",
+       y = "Average Score",
+       caption = "Source: Kaggle (College Board; 2017)",
+       color = "Race")
+```
+
+The analysis of the data set revealed that Asians outperformed other racial groups on 35 out of the 37 AP tests examined. This finding highlights a significant academic advantage for Asian students across a wide range of subjects. However, in the specific AP tests of Language and Culture and Spanish, Latinos demonstrated higher scores compared to other groups, suggesting their strength in language-based assessments. Whites generally ranked second in performance, followed by Latinos in third place, and blacks in fourth place. 
